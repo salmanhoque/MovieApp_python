@@ -1,5 +1,4 @@
 <h1>Python Micro-movie App</h1>
-<hr/>
 
 <strong> Testing python unit-test... </strong>
 

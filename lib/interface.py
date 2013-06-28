@@ -36,13 +36,22 @@ class Interface:
 
 	def add(self):
 		self.header_output("Adding....")
+		args = []
+		args.append(raw_input("Enter Movie Name: ").strip())
+		args.append(raw_input("Enter Release year: ").strip())
+		args.append(raw_input("Enter Movie Rating: ").strip())
+		if Movie.add_movie_into_file(args):
+			print("\nNew movie has been added to your movie list")
+		else:
+			print("\nSorry File Error!")
+		
 
 	def list_movie(self):
 		movies = Movie.read_movies_from_file()
 		self.movie_table_output(movies)
 
 	def find_movie(self):
-		self.header_output("Findding....")
+		self.header_output("Finding....")
 
 
         	
