@@ -52,17 +52,24 @@ class Interface:
 
 	def list_movie(self,kwargs):
 		
+		sort_order = 'name'
 		if kwargs != []:
-			sort_order == 'name'
 			if kwargs[0] == 'by':
 				sort_order = kwargs.pop(1)
 			else: 
 				sort_order = kwargs.pop(0)
 		
-
 		movies = Movie.read_movies_from_file()
+		if sort_order == 'date':
+			movies.sort(cmp = lambda x, y: cmp(x.date, y.date))
+		elif sort_order == 'rating':
+			movies.sort(cmp = lambda x, y: cmp(x.rating, y.rating))			
+		else:
+			movies.sort(cmp = lambda x, y: cmp(x.movie, y.movie))
 		self.movie_table_output(movies)
 
+	
+		
 	def find_movie(self):
 		self.header_output("Finding....")
 
