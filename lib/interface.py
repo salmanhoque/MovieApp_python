@@ -19,21 +19,21 @@ class Interface:
 		action = None
 
 		while action != "quit":
-			user_action = raw_input("\n\nWhat you wanna do? cmd --> add, list, find\n >").strip()
+			user_action = raw_input("\n\nWhat you wanna do? cmd --> add, list, find or quit\n >").strip()
 			user_action = user_action.split(" ")
 			action      = self.actions(user_action)
 		self.ending_mgs()
 
 
 	def actions(self,user_action):
-		action = user_action.pop(0)
+		action = user_action.pop(0).lower()
 
 		if action == 'add':
 			self.add()
 		elif action == 'list':
 			self.list_movie(user_action)
-		elif action == 'list':
-			self.find_movie()	
+		elif action == 'find':
+			self.find_movie(user_action)	
 		elif action == 'quit':
 			return 'quit'
 
@@ -68,13 +68,19 @@ class Interface:
 			movies.sort(cmp = lambda x, y: cmp(x.movie, y.movie))
 		self.movie_table_output(movies)
 
-	
-		
-	def find_movie(self):
+
+	def find_movie(self,user_action):
 		self.header_output("Finding....")
+		movies = Movie.read_movies_from_file()
+		arg    = user_action.pop(0)
+		found  = [x for x in movies if self.search(x,arg)]
+		self.movie_table_output(found)
+    
+	def search(self,x,arg):
+		movie_names = x.movie.split(" ")
+		found = [x for x in movie_names if x.lower() == arg.lower()]
+		return found
 
-
-        	
 	def welcome_msg(self):
 		self.header_output("Welcome To Python Movie App") 
 
@@ -87,7 +93,6 @@ class Interface:
 		print text.center(80)
 
 	def movie_table_output(self,movies):
-		self.header_output("All Movie List")
 		print "="*80
 		print "Movie Name".ljust(40) + "Release Year".ljust(25) + "Rating".rjust(15)
 		print "="*80
