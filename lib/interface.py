@@ -51,7 +51,7 @@ class Interface:
 		
 
 	def list_movie(self,kwargs):
-		
+		print "\n Example: list name, list rating, list date or list by name etc. \n"
 		sort_order = 'name'
 		if kwargs != []:
 			if kwargs[0] == 'by':
@@ -71,11 +71,15 @@ class Interface:
 
 	def find_movie(self,user_action):
 		self.header_output("Finding....")
+		print "\n Example: find iron or find Iron Man 3 \n"
 		movies = Movie.read_movies_from_file()
-		arg    = user_action.pop(0)
-		found  = [x for x in movies if self.search(x,arg)]
-		self.movie_table_output(found)
-    
+		if user_action != []:
+			arg    = user_action.pop(0)
+			found  = [x for x in movies if self.search(x,arg)]
+			self.movie_table_output(found)
+
+    	print "\n Example: find iron or find Iron Man 3 \n"
+
 	def search(self,x,arg):
 		movie_names = x.movie.split(" ")
 		found = [x for x in movie_names if x.lower() == arg.lower()]
