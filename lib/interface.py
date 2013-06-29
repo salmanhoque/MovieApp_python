@@ -20,23 +20,27 @@ class Interface:
 
 		while action != "quit":
 			user_action = raw_input("\n\nWhat you wanna do? cmd --> add, list, find\n >").strip()
+			user_action = user_action.split(" ")
 			action      = self.actions(user_action)
 		self.ending_mgs()
 
 
 	def actions(self,user_action):
-	    if user_action =='add':
-	    	self.add()
-	    elif user_action == 'list':
-	    	self.list_movie()
-	    elif user_action == 'find':
-	    	self.find_movie()
-	    elif user_action == 'quit':
-	    	return 'quit'
+		action = user_action.pop(0)
+
+		if action == 'add':
+			self.add()
+		elif action == 'list':
+			self.list_movie(user_action)
+		elif action == 'list':
+			self.find_movie()	
+		elif action == 'quit':
+			return 'quit'
+
 
 	def add(self):
-		self.header_output("Adding....")
 		args = []
+		self.header_output("Adding....")
 		args.append(raw_input("Enter Movie Name: ").strip())
 		args.append(raw_input("Enter Release year: ").strip())
 		args.append(raw_input("Enter Movie Rating: ").strip())
@@ -46,7 +50,16 @@ class Interface:
 			print("\nSorry File Error!")
 		
 
-	def list_movie(self):
+	def list_movie(self,kwargs):
+		
+		if kwargs != []:
+			sort_order == 'name'
+			if kwargs[0] == 'by':
+				sort_order = kwargs.pop(1)
+			else: 
+				sort_order = kwargs.pop(0)
+		
+
 		movies = Movie.read_movies_from_file()
 		self.movie_table_output(movies)
 
